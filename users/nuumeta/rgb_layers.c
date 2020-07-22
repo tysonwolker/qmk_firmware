@@ -1,34 +1,36 @@
 #include "nuumeta.h"
+#include "eeprom.h"
 
-const rgblight_segment_t PROGMEM bl_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {0, RGBLED_NUM, HSV_CYAN}
-);
-
-const rgblight_segment_t PROGMEM fl_layer[] = RGBLIGHT_LAYER_SEGMENTS(
-    {0, RGBLED_NUM, HSV_MAGENTA}
-);
-
-// Now define the array of layers. Later layers take precedence
-// const rgblight_segment_t *const PROGMEM rgb_light_layers[] = {
-const rgblight_segment_t *const PROGMEM rgb_light_layers[] = RGBLIGHT_LAYERS_LIST(
-    bl_layer,
-    fl_layer
-);
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-    dprintf("in layer_state_set_user: %u\n", state);
-    // Both layers will light up if both kb layers are active
-    rgblight_set_layer_state(0, layer_state_cmp(state, _BL));
-    rgblight_set_layer_state(1, layer_state_cmp(state, _FL));
-
-    return state;
+void rgblight_set_hsv_and_mode(uint8_t hue, uint8_t sat, uint8_t val, uint8_t mode) {
+    rgblight_sethsv_noeeprom(hue, sat, val);
+    wait_us(175);  // Add a slight delay between color and mode to ensure it's processed correctly
+    rgblight_mode_noeeprom(mode);
 }
 
-void keyboard_post_init_user(void) {
-    // set initial animation type (in that I don’t want it)
-    rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
-    // set the default colour
-    rgblight_sethsv_range(HSV_CYAN, 0, RGBLED_NUM);
-    // Enable the LED layers
-    rgblight_layers = rgb_light_layers;
+void keyboard_post_init_rgb_light(void) {
+#ifdef RGBLIGHT_ENABLE
+    layer_state_set_rgb_light(layer_state);
+#endif  // RGBLIGHT_ENABLE
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+#ifdef RGBLIGHT_ENABLE
+    uint8_t mode = RGBLIGHT_MODE_STATIC_LIGHT;
+    
+    switch (get_highest_layer(state)) {
+    case _QWERTY:
+        rgblight_set_hsv_and_mode(HSV_CYAN, mode);
+        break;
+    case _FUNCTIONS:
+        rgblight_set_hsv_and_mode(HSV_MAGENTA, mode);
+        break;
+    case _SETTINGS:
+        rgblight_set_hsv_and_mode(HSV_RED, mode);
+        break;
+    default: //  for any other layers, or the default layer
+        rgblight_set_hsv_and_mode(HSV_CYAN, mode);
+        break;
+    }
+  return state;
+#endif  // RGBLIGHT_ENABLE
 }
