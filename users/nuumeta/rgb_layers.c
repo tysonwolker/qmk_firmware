@@ -22,7 +22,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
             rgblight_set_hsv_and_mode(HSV_RED, mode);
             break;
         case _MACROS:
-            rgblight_set_hsv_and_mode(HSV_ORANGE, mode);
+            rgblight_set_hsv_and_mode(HSV_GOLD, mode);
+            break;
+        case _VIM:
+            rgblight_set_hsv_and_mode(HSV_PINK, mode);
             break;
         default:  //  for any other layers, or the default layer
         {
