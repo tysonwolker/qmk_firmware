@@ -8,13 +8,10 @@ void rgblight_set_hsv_and_mode(uint8_t hue, uint8_t sat, uint8_t val, uint8_t mo
 }
 
 void keyboard_post_init_rgb_light(void) {
-#ifdef RGBLIGHT_ENABLE
     layer_state_set_rgb_light(layer_state);
-#endif  // RGBLIGHT_ENABLE
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-#ifdef RGBLIGHT_ENABLE
     uint8_t mode = RGBLIGHT_MODE_STATIC_LIGHT;
     
     switch (get_highest_layer(state)) {
@@ -32,5 +29,4 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         break;
     }
   return state;
-#endif  // RGBLIGHT_ENABLE
 }
