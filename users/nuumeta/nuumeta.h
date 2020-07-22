@@ -25,7 +25,9 @@ enum userspace_layers {
     _UNIX  = 0,
     _WINDOWS,
     _FUNCTIONS,
-    _SETTINGS
+    _SETTINGS,
+    _MACROS,
+    _VIM
 };
 
 #ifdef TAP_DANCE_ENABLE
