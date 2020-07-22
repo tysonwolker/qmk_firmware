@@ -12,6 +12,10 @@ void keyboard_post_init_rgb_light(void) {
 }
 
 layer_state_t layer_state_set_user(layer_state_t state) {
+    return layer_state_set_rgb_light(state);
+}
+
+layer_state_t layer_state_set_rgb_light(layer_state_t state) {
     uint8_t mode = RGBLIGHT_MODE_STATIC_LIGHT;
     
     switch (get_highest_layer(state)) {
