@@ -48,9 +48,3 @@
 #ifdef PERMISSIVE_HOLD
 #    undef PERMISSIVE_HOLD
 #endif
-
-#ifdef RGBLIGHT_ENABLE
-#    define RGBLIGHT_LAYERS
-// #    define RGBLIGHT_EFFECT_BREATHING
-// #    define BACKLIGHT_CAPS_LOCK
-#endif

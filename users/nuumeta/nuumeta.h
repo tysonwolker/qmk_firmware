@@ -10,6 +10,10 @@
 #    include "rgb_layers.h"
 #endif
 
+#ifdef TAP_DANCE_ENABLE
+#    include "tap_dances.h"
+#endif  // TAP_DANCE_ENABLE
+
 // Init macro keycodes, define what they do in <name>.c
 enum custom_keys {
     MCSG3 = SAFE_RANGE,
@@ -18,7 +22,14 @@ enum custom_keys {
 };
 
 enum userspace_layers {
-    _QWERTY  = 0,
+    _UNIX  = 0,
+    _WINDOWS,
     _FUNCTIONS,
     _SETTINGS
 };
+
+#ifdef TAP_DANCE_ENABLE
+#    define KC_SAFE_RESET TD(TD_SAFE_RESET)
+#else  // TAP_DANCE_ENABLE
+#    define KC_SAFE_RESET RESET
+#endif  // TAP_DANCE_ENABLE

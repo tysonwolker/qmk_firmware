@@ -90,7 +90,7 @@ extern userspace_config_t userspace_config;
 /*
 Custom Keycodes for Diablo 3 layer
 But since TD() doesn't work when tap dance is disabled
-We use custom codes here, so we can substitute the right stuff
+We use custom codes here, so we can substitute the rcsight stuff
 */
 #ifdef TAP_DANCE_ENABLE
 #    define KC_D3_1 TD(TD_D3_1)
